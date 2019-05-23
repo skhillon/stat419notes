@@ -1,0 +1,413 @@
+\hypertarget{textbook-ch-4}{%
+\chapter{Textbook Ch 4}\label{textbook-ch-4}}
+
+\hypertarget{chapter-4---tests-of-significance-with-multivariate-data}{%
+\subsection{Chapter 4 - Tests of Significance with Multivariate
+Data}\label{chapter-4---tests-of-significance-with-multivariate-data}}
+
+\hypertarget{simultaneous-tests-on-several-variables}{%
+\subsubsection{4.1 - Simultaneous tests on several
+variables}\label{simultaneous-tests-on-several-variables}}
+
+\begin{itemize}
+\tightlist
+\item
+  If we collect data for several variables with the same units, then we
+  can always examine variables one at a time.
+\item
+  \emph{TODO: What do they mean here by sample units?}
+\item
+  \emph{TODO: I also don't get this sentence} : If sample units are in 2
+  groups, then a difference between means for 2 groups can be tested
+  separately for each variable.
+\item
+  Repeated individual significance tests each have errors
+  -\textgreater{} multiply errors together.
+\item
+  Probability of false positive in at least one accumulates as num tests
+  increases.
+\item
+  Instead, we want 1 test that uses all info together.
+\item
+  Ex) \[H_0\]: Means of all variables are same for 2 multivariate
+  population, and if \[p < 0.05\] then we take it as \[H_a\]: Means
+  differ for at least 1 variable.
+\end{itemize}
+
+\hypertarget{comparison-of-mean-values-for-2-samples-the-single-variable-case}{%
+\subsubsection{4.2 - Comparison of mean values for 2 samples: The
+single-variable
+case}\label{comparison-of-mean-values-for-2-samples-the-single-variable-case}}
+
+\begin{itemize}
+\tightlist
+\item
+  Recall data in Table 1.1 on body measurements of 49 female sparrows.
+\item
+  A sample when testing Darwin's theory of Natural Selection.
+\item
+  Birds 1-21 survived, 22-49 died.
+\item
+  Features included \[X_1\] = total length, \[X_2\] = alar extent,
+  \[X_3\] = length of beak \& head, \[X_4\] = length of humerus, and
+  \[X_5\] = length of keel of sternum
+\item
+  All features in millimeters.
+\item
+  Take \[X_1\], total length
+\item
+  Was mean length the same for survivors and non-survivors?
+\item
+  We create a sample of 21 survivors and 28 non-survivors, assuming
+  random samples from much larger populations of survivors and
+  non-survivors.
+\item
+  Are the 2 means \textbf{significantly} different?
+\item
+  Is the observed difference of the 2 means so large that it is unlikely
+  to have happened by chance if the \textbf{population} means were
+  otherwise equal?
+\item
+  To do this, we perform a \textbf{t-test}.
+\end{itemize}
+
+\hypertarget{t-tests-unofficial-header}{%
+\paragraph{t-tests (unofficial
+header)}\label{t-tests-unofficial-header}}
+
+\begin{itemize}
+\tightlist
+\item
+  Let there be a single variable \[X\] and 2 random samples of values
+  from 2 different populations.
+\item
+  Let \[X_{i1}\] denote values of \[X\] in the first sample for
+  \[i = 1,2,...,n_1\]
+\item
+  Let \[X_{i2}\]denote values of \[X\] in the second sample for
+  \[i = 1,2,...,n_2\]
+\end{itemize}
+
+Then the mean for some other \[j\]th sample is:
+
+\[\bar{x_j} = \sum_{i = 1}^{n_j} \frac{x_{ij}}{n}\]
+
+and the variance is:
+
+\[s_j^2 = \sum_{i = 1}^{n_j} \frac{(x_{ij} - \bar{x_j})^2}{(n_j - 1)}\]
+
+\begin{itemize}
+\tightlist
+\item
+  We assume \[X\] is normally distributed in both samples and has the
+  same variance within each sample.
+\item
+  We test whether 2 sample means are \textbf{significantly different}
+  using t-statistic:
+\end{itemize}
+
+\[t = \frac{(\bar{x_1} - \bar{x_2})}{s \times \sqrt{(\frac{1}{n_1} + \frac{1}{n_2})}}\]
+
+\begin{itemize}
+\tightlist
+\item
+  We then test if this is significantly different than 0 (no difference)
+  in comparison with the t-distribution with appropriate degrees of
+  freedom (df):
+\end{itemize}
+
+\[ df = n_1 + n_2 - 2 \]
+
+The \textbf{pooled estimate of variance from the 2 samples} is given by:
+
+\[s^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{df}\]
+
+\begin{itemize}
+\tightlist
+\item
+  If we assume normality (which is fine for \[ n > 15 \] or so) then
+  this is robust.
+\item
+  We also don't have to worry too much about equal population variances
+  if their ratio is between 0.4 and 2.5.
+\item
+  Helps if sample sizes are equal.
+\item
+  If they're normal but population variances may be drastically unequal,
+  then we can use Welch's t-test:
+\end{itemize}
+
+\[t = \frac{(\bar{x_1} - \bar{x_2})}{\sqrt{(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2})}}\]
+
+which we compare to the t distribution:
+
+\[v = \frac{(w_1 + w_2)^2}{(\frac{w_1^2}{(n_1 - 1)} + \frac{w_2^2}{(n_2 - 1)})}\]
+
+where
+
+\[w_1 = \frac{s_1^2}{n_1}\] and \[w_2 = \frac{s_2^2}{n_2}\]
+
+But usually use the first ones, this one you probably won't need.
+
+\hypertarget{comparison-of-mean-values-for-2-samples-the-multivariate-case}{%
+\subsubsection{4.3 - Comparison of mean values for 2 samples: The
+multivariate
+case}\label{comparison-of-mean-values-for-2-samples-the-multivariate-case}}
+
+\begin{itemize}
+\tightlist
+\item
+  We can do the t-test in the previous section for each of the 5
+  measurements in the table, separately, to figure out which ones differ
+  significantly between survivors and non-survivors.
+\item
+  What if a \textbf{multivariate relationship between the variables} was
+  the predicting factor?
+\item
+  We need a multivariate test to handle this: \textbf{Hotelling's}
+  \[T^2\]\textbf{-test}. It's a generalization of the square of the
+  original t-statistic.
+\item
+  In a general case, there are \[p\] variables \[X_1, X_2, ..., X_p\]
+  being considered, and 2 samples with sizes \[n_1\] and \[n_2\].
+\item
+  There are also 2 sample mean vectors, \[\bar{x_1}\] and \[\bar{x_2}\]
+  and 2 sample covariance matrices \[C_1\] and \[C_2\] being calculated
+  as before.
+\item
+  TODO: Q: isn't there only 1 sample mean vector with 2 elements?
+\end{itemize}
+
+Assuming that population covariance matrices equal each other
+\[(\Sigma_1 = \Sigma_2)\], we obtain a pooled estimate of the covariance
+matrix:
+
+\[C = \frac{(n_1 - 1)C_1 + (n_2 - 1)C_2}{n_1 + n_2 - 2}\]
+
+Hotelling's \[T^2\] statistic is then defined as:
+
+\[T^2 = \frac{n_1 n_2(\bar{x_1} - \bar{x_2})'C^{-1}(\bar{x_1} - \bar{x_2})} {(n_1 + n+2)}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Significantly large} \[T^2\] \textbf{values mean that the
+  population mean vectors are different}
+\item
+  How do we find significance? Turn it into an F distribution,
+  \[F \sim (p, n_1 + n_2 - p - 1)\]
+\item
+  We can also rewrite Hotelling's statistic in a form similar to
+  compute:
+\end{itemize}
+
+\[T^2 = \frac{(n_1 n_2)}{(n_1 + n_2)} \sum_{i = 1}^p \sum_{k = 1}^p (\bar{X_{1i}} - \bar{X_{2i}}) c^{ik} (\bar{X_{1k}} - \bar{X_{2k}})\]
+
+where \[ \bar{X_{ji}} \] is the mean of variable \[ X_i \] in the
+\[j\]th sample, and \[ c^{ik} \] is the element in the \[i\]th row and
+\[k\]th column of the inverse matrix \[ C^{-1} \].
+
+Remember that to compare 2 samples using Hotelling's statistic, both
+samples are assumed to come from multivariate normal distributions with
+equal covariance matrices, with moderate deviation allowed in
+multivariate normality and population covariance matrix equality.
+
+\textbf{Example 4.1 Not replicated, Handwrite}
+
+\hypertarget{multivariate-vs-univariate-tests}{%
+\subsubsection{4.4 - Multivariate vs Univariate
+Tests}\label{multivariate-vs-univariate-tests}}
+
+\begin{itemize}
+\tightlist
+\item
+  It is possible to have insignificant univariate tests (t-tests), but
+  significant multivariate (Hotelling's \[T^2\] tests), and vice versa.
+\item
+  Significant multivariate happens from accumulations of evidence from
+  individual variables in the overall test, i.e., multiple factors
+  \textbf{together} are significant, but individually mean nothing.
+\item
+  Significant univarite but not multivariate happens when one
+  significant result is swamped by other insignificant results in the
+  group.
+\item
+  Type I error is false positive (null hypothesis is true even though we
+  rejected).
+\item
+  In univariate, we test at 5\% level, so 95\% chance of nonsignificant
+  result.
+\item
+  If we do \[p\] independent trials, then probability of at least 1
+  significant result is \[ 1 - 0.95^p \], which keeps increasing with
+  \[p\] and may become unacceptably large. For example, \[p = 3\] yields
+  0.23.
+\item
+  In multivariate data, variables are not usually independent, so the
+  formula above isn't entirely accurate. Still, the more tests, the
+  higher probability of a single false positive.
+\item
+  To avoid increasing probability of Type I error, we use a multivariate
+  test like Hotelling's \[T^2\] test. Providing assumptions hold, 5\%
+  level of significance does not increase with \[p\] variables involved.
+\item
+  If you still need to use univariate tests, you can perform a
+  Bonferroni adjustment. Not covering cuz we didn't do this in lecture,
+  basically you just increase your \[\alpha\] proportionally to \[p\] to
+  make up for the number of variables: \[ \frac{(100\alpha)}{p}\%\]
+\item
+  Probably just use a multivariate test.
+\end{itemize}
+
+\hypertarget{comparison-of-variation-for-2-samples-the-single-variable-case}{%
+\subsubsection{4.5 - Comparison of Variation for 2 Samples: The
+Single-Variable
+Case}\label{comparison-of-variation-for-2-samples-the-single-variable-case}}
+
+\begin{itemize}
+\tightlist
+\item
+  With 1 variable, you can compare 2 samples using an F-test.
+\item
+  Review:
+\item
+  1) Get variances of both samples: \[s_1^2\] and \[s_2^2\].
+\item
+  2) Compare ratio of first / second to F distribution:
+  \[ F \sim F(n_1 - 1, n_2 - 2) \]
+\item
+  Drawback of F-test is that it's sensitive to non-normality, so you
+  might get a false positive significance due to the fact that the
+  variables aren't normally distributed rather than the fact that their
+  variances are unequal.
+\item
+  More robust version is Levene's test. See example 4.2 (not replicated
+  here).
+\end{itemize}
+
+\hypertarget{comparison-of-variation-for-2-samples-the-multivariate-case}{%
+\subsubsection{4.6 - Comparison of Variation for 2 samples: The
+Multivariate
+Case}\label{comparison-of-variation-for-2-samples-the-multivariate-case}}
+
+\begin{itemize}
+\tightlist
+\item
+  Usually use \textbf{Box's M-test} to compare variation in 2 or more
+  multivariate samples. See section 4.8 for more.
+\item
+  Sensitive to assumption that samples are from multivariate normal
+  distributions.
+\item
+  False positive might be due to nonnormality rather than unequal
+  population covariance matrices (\[\Sigma\])
+\item
+  Van Valen's test:
+\end{itemize}
+
+\[d_{ij} = \sqrt{\Sigma_{k = 1}^p (x_{ijk} - \bar{x}_{jk})^2}\]
+
+where \[ x_{ijk} \] \emph{is the value of variable} \[X_k\] \emph{for
+the} \[i\]\emph{th individual in sample} \[j\]\emph{, and}
+\[\bar{x}_{jk}\] is the mean of the same variable in the sample.
+\textbf{Note that each variable should be standardized to} \[\mu = 0\]
+\textbf{and} \[\sigma^2 = 1\].
+
+For a more robust test, we can replace \[\bar{x}_{jk}\] \emph{with}
+\[ M_{jk} \], which is the median for variable \[X_k\] for the \[i\]th
+individual in sample \[j\].
+
+\hypertarget{comparison-of-means-for-several-samples}{%
+\subsubsection{4.7 - Comparison of Means for Several
+Samples}\label{comparison-of-means-for-several-samples}}
+
+There are 4 statistics used to test \[H_0\]: All samples come from
+populations with the same mean vector.
+
+\hypertarget{wilks-lambda-statistic}{%
+\paragraph{1 - Wilks' Lambda Statistic}\label{wilks-lambda-statistic}}
+
+In short, we calculate \[\Lambda\]. If it is small, then the samples do
+not come from populations with the same mean vector. The calculation is:
+\[\Lambda = \frac{| W | }{| T |}\]
+
+where:
+
+\begin{itemize}
+\tightlist
+\item
+  \[| x |\] is a determinant
+\item
+  \[W\] is the within-sample Sum of Squares and Cross-product matrix
+  (TODO: ???)
+\item
+  \[T\] is the total sum of squares and cross products matrix.
+\end{itemize}
+
+What are \[W\] and \[T\]?
+
+\begin{itemize}
+\tightlist
+\item
+  We have \[j\] samples (tables)
+\item
+  Each sample has \[i\] individuals (rows)
+\item
+  Each individual has \[k\] variables (columns)
+\end{itemize}
+
+So,
+
+\begin{itemize}
+\tightlist
+\item
+  \[x_{ijk}\] is the value of the variable \[X_k\] for the \[i\]th
+  individual in the \[j\]th sample.
+\item
+  \[\bar{x}_k\] is the overall mean of \[X_k\] across all samples.
+\end{itemize}
+
+Assuming \[m\] total samples, each with its own size \[n_j\], the
+elements in row \[r\] and column \[c\] of the \[\textbf{T}\] matrix are:
+
+\[t_{rc} = \Sigma_{j = 1}^m \Sigma_{i = 1}^{n_j} (x_{ijr} - \bar{x}_r)(x_{ijc} - \bar{x}_c)\]
+
+The elements in row \[r\] and column \[c\] of the \[\textbf{W}\] matrix
+are:
+
+\[w_{rc} = \Sigma_{j = 1}^m \Sigma_{i = 1}^{n_j} (x_{ijr} - \bar{x}_{jr})(x_{ijc} - \bar{x}_{jc})\]
+
+Note the difference in what's being subtracted right before parentheses
+(TODO: Explain). The other equations here don't really match up with
+what we learned.
+
+\hypertarget{comparison-of-variation-for-several-samples-manova-primer}{%
+\subsubsection{4.8 - Comparison of Variation for Several Samples (MANOVA
+Primer)}\label{comparison-of-variation-for-several-samples-manova-primer}}
+
+Use Box's M-test to compare variation in several samples. The
+M-statistic is given by the equation:
+
+\[M = \frac{\Pi_{i = 1}^m | C_i | ^ {\frac{1}{2}(n_i - 1)}} {| C | ^ {\frac{1}{2} (n - m)}}\]
+
+where
+
+\begin{itemize}
+\tightlist
+\item
+  \[n_i\] is the size of the \[i\]th sample
+\item
+  \[C_i\] is the sample covariance for the \[i\]th sample (see section
+  2.7)
+\item
+  \[C\] is the pooled covariance matrix given by:
+\end{itemize}
+
+\[C = \frac{\Sigma_{i = 1}^m (n_i - 1) C_i}{(n - m)}\]
+
+\hypertarget{significant-m-values}{%
+\paragraph{Significant M-values}\label{significant-m-values}}
+
+Large values of M mean that samples are \textbf{not from populations
+with the same covariance matrix}. We test with some equations that I
+don't think we need to know.

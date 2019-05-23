@@ -1,0 +1,178 @@
+\hypertarget{lecture-11---manova-lda-part-ii}{%
+\chapter{Lecture 11 - MANOVA + LDA Part
+II}\label{lecture-11---manova-lda-part-ii}}
+
+Recall if we have 2 groups, we perform Hotelling's \[T^2\], and if we
+have 3+ groups, we do MANOVA.
+
+\hypertarget{manova-part-ii}{%
+\subsubsection{\texorpdfstring{MANOVA \textbf{Part
+II}}{MANOVA Part II}}\label{manova-part-ii}}
+
+Recall we are comparing \[E\] vs \[H\], and the important matrix is
+\[E^{-1}H\] which we want to maximize because that means that E is large
+compared to H.
+
+We find the eigenvalues of \[E^{-1}H\]:
+\[\lambda_1, \lambda_2, ..., \lambda_p\] and that these are ordered from
+largest to smallest. How big, in terms of those eigenvalues, is
+\[E^{-1}H\]?
+
+We find that \[| E^{-1}H | = \prod \lambda_i\]
+
+Therefore, Wilk's Lambda can be written as:
+\[\Lambda = \frac{| E + H |}{| E |} = \prod_{i = 1}^p \frac{1}{1 + \lambda_i}\]
+
+\hypertarget{how-do-we-decide-how-many-variables-to-keep}{%
+\paragraph{How do we decide how many variables to
+keep?}\label{how-do-we-decide-how-many-variables-to-keep}}
+
+We use a ``truncated'' Wilk's Lambda.
+
+If we only want to keep the first \[k \le p\] variables, then we also
+only have to keep the first \[k\] eigenvectors:
+
+\[\Lambda_k =  \prod_{i = 1}^k \frac{1}{1 + \lambda_i}\]
+
+We no longer need \[H\] and \[E\]; all we need are eigenvalues.
+
+In 2 populations, we found an \[\vec{a}\] that maximizes \[T^2\].
+
+In 3+ populations, we find \[\vec{a_1}, \vec{a_2}, ..., \vec{a_p}\] that
+maximizes \[\Lambda\], or equivalently, the
+ratio\[\frac{\vec{a}'H\vec{a}}{\vec{a}'E\vec{a}}\]. This is solved by
+solving for \[\vec{a}\] in the following equation:
+
+\[(E^{-1}H - \lambda I)_{\vec{a}} = 0\]
+
+The lambdas tell you, relatively speaking, how important each
+discriminant function \[\vec{a_1}, \vec{a_2}, ..., \vec{a_p}\] is.
+
+\hypertarget{take-away}{%
+\paragraph{Take-Away}\label{take-away}}
+
+The matrix \[| E^{-1}H |\] ****is important because you're trying to
+maximize \[\frac{\vec{a}'H\vec{a}}{\vec{a}'E\vec{a}}\] ****as much as
+possible. We can do that through matrix decomposition of
+****\[(E^{-1}H - \lambda I)_{\vec{a}} = 0\]\textbf{.}
+
+\hypertarget{lda-part-ii}{%
+\subsubsection{\texorpdfstring{\textbf{LDA Part
+II}}{LDA Part II}}\label{lda-part-ii}}
+
+Reasons why we do LDA:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  We want to decide which variables matter for distinguishing groups
+  (are ``\emph{descriptive}'')
+\item
+  ``Predictive'': Some unknown observation comes along, and we have to
+  guess which population it came from (``\emph{classification}'')
+\end{enumerate}
+
+In LDA, we're trying to come up with some scoring, or ruling, for how
+we're going to classify a new observation.
+
+\hypertarget{classification}{%
+\paragraph{Classification}\label{classification}}
+
+Is supervised, or at least semi-supervised. How do we use LDA for
+classification?
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Find discriminant function(s) for known data (training set).
+\item
+  Find all scores from those functions for the training set.
+\item
+  Create a rule: choose a cutoff to differentiate between our
+  populations.
+\item
+  Take all unknown data, score those, and use cutoffs to classify them.
+\end{enumerate}
+
+\hypertarget{notes-while-going-over-classification_code.rmd}{%
+\paragraph{Notes while going over
+`Classification\_Code.Rmd`:}\label{notes-while-going-over-classification_code.rmd}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Step 1:} Discriminant function is difference of means times
+  inverse of covariance matrix.
+\item
+  \[\vec{a} = (\vec{\bar{y_1}} - \vec{\bar{y_2}}) S_p^{-1}\]
+\item
+  Note that the values are on different scales. If we're using LDA for
+  goal \#1 (see which variables matter), then you definitely have to
+  standardize.
+\item
+  \textbf{Step 2:} However, our goal is \#2 (classification). We drop
+  the response variable (\texttt{t(as.matrix(wine{[},\ -12{]}))}) and
+  then multiply that by our discriminant function to get our
+  discriminant score.
+\item
+  We don't really know what these scores mean, and we don't care; we
+  just want to know the scores \textbf{relative to each other.} We do
+  this by plotting.
+\item
+  She set cutoff to halfway point. This seems like SVM\ldots{}
+\item
+  \textbf{Step 3}: How do we choose a proper cutoff?
+\item
+  Avoid overfitting: perfectly categorizing known samples is not
+  impressive!
+\item
+  Deal with this using cross-validation.
+\item
+  If we have different sample sizes, then we can use that to weight our
+  predictions.
+\item
+  Ex: our training data has more bad wines than good, so without any
+  other information, if asked, you should guess that the wine is bad.
+\item
+  Furthermore, good wines might have a small range of scores (-750 to
+  -720) whereas bad wines much have a much larger range (-750 to -800)
+\item
+  Risk analysis: cost of misclassification.
+\item
+  If you enter a wine into a competition and pay a \$5000 entry fee,
+  then the cost of misclassifying a bad wine as good is \$5000.
+\item
+  On the other hand, misclassifying a good wine as bad costs you
+  nothing, because you just won't enter it into the competition.
+\end{itemize}
+
+\hypertarget{fishers-rule-for-choosing-cutoff}{%
+\paragraph{Fisher's Rule for choosing
+cutoff}\label{fishers-rule-for-choosing-cutoff}}
+
+Deals with proportions (continuing with bad and good wines example).
+
+\[p_G = \frac{n_G}{n_{tot}}\] and \[p_B = \frac{n_B}{n{tot}}\] are
+``probability estimates''
+
+Also ``costs'' of misclassification:
+
+\[C_{12}\] is the cost of misclassifying a category 1 observation as
+category 2. In the code, 1 is ``good wines'' and 2 is ``bad wines''.
+
+Fisher's rule says we take the halfway point and then add an adjustment.
+The total equation is:
+
+\[Cutoff = \frac{score}{2} + log(\frac{p_1C_{21}}{p_2C_{12}})\]
+
+\hypertarget{continuing-with-rmd-step-4}{%
+\paragraph{Continuing with Rmd, Step
+4}\label{continuing-with-rmd-step-4}}
+
+We classify unknown wines and plot. We know ``above is good'' and ``bad
+is below'' by looking at the original plot.
+
+Note that LDA function always standardizes and chooses cutoff as 0 if
+you don't provide an adjustment.
